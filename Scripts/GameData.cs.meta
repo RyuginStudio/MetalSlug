@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: dd3182ba39e74b24fbe2ca5ee6f23ca1
+timeCreated: 1508084970
+licenseType: Free
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - Effect_shotGun: {fileID: 8300000, guid: 63127454c42eac3498dbf945a633a693, type: 3}
+  - Prefab_bulletPrefab: {fileID: 1870494353482382, guid: 971873ec3871404458cd82413ba242eb,
+      type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
