@@ -58,9 +58,9 @@ public class Character : MonoBehaviour
 
     public void characInit()
     {
-        CharacDirection = Direction.lookRight;
         CharacStatus = Status.idle;
         characSpeed = GameData.normalSpeed;
+        CharacDirection = Direction.lookRight;
 
         upBodyPos = upBody.transform.position;
     }
@@ -77,7 +77,7 @@ public class Character : MonoBehaviour
                         downBody.transform.rotation = Quaternion.Euler(0, 0, 0);
                     }
 
-                    characSpeed = CharacDirection == Direction.squat ?  GameData.squatSpeed : GameData.normalSpeed;
+                    characSpeed = CharacDirection == Direction.squat ? GameData.squatSpeed : GameData.normalSpeed;
                     wholeBody.transform.Translate(Vector3.left * Time.deltaTime * characSpeed);
 
                     break;
@@ -96,8 +96,6 @@ public class Character : MonoBehaviour
 
                     break;
                 }
-
-
         }
 
     }
@@ -136,7 +134,7 @@ public class Character : MonoBehaviour
 
     public void shoot()  //射击
     {
-        //用什么枪 => 枪类（射击频率，装弹CD，动画等）
+        //用什么枪 => 枪类（射击频率，装弹CD，动画等）近距离用刀
 
         //根据枪种类产生子弹（碰撞，位置，动画，轨迹，子弹伤害）
 
@@ -158,6 +156,12 @@ public class Character : MonoBehaviour
                     break;
                 }
         }
+    }
+
+    public void knife()  //挥刀
+    {
+        //近距离用刀
+
     }
 
 }

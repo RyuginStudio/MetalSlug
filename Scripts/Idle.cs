@@ -31,7 +31,7 @@ public class Idle : MonoBehaviour
                 Character.getInstance().CharacDirection = Character.Direction.lookLeft;
             }
         }
-        
+
         if (Input.GetKey(KeyCode.W))
         {
             Character.getInstance().CharacDirection = Character.Direction.lookUp;
