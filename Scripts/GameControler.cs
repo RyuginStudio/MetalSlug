@@ -56,5 +56,11 @@ public class GameControler : MonoBehaviour
 
             }
         }
+
+        if (Input.GetKeyDown(KeyCode.J))
+        {
+            Debug.Log("key 'J' for shoot");
+            Character.getInstance().shoot();
+        }
     }
 }

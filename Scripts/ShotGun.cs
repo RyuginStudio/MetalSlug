@@ -30,19 +30,44 @@ public class ShotGun : Gun
 
     public override void bulletTraject()
     {
-        int prefabDirect;
+        var bulletPos = Character.getInstance().upBody.transform.position;
         var characterPos = Character.getInstance().upBody.transform.position;
 
-        //子弹位置修正
-        var bulletPos = Character.getInstance().CharacDirection == Character.Direction.lookLeft
-        ? new Vector2(characterPos.x - 2.2f, characterPos.y - 0.13f)
-        : new Vector2(characterPos.x + 2.2f, characterPos.y - 0.13f);
+        //子弹位置、朝向修正
+        switch (Character.getInstance().CharacDirection)
+        {
+            case Character.Direction.lookLeft:
+            {
+                bulletPos = new Vector2(characterPos.x - 2.2f, characterPos.y - 0.13f);
+                
+                break;
+            }
+            
+            case Character.Direction.lookRight:
+            {
+                bulletPos = new Vector2(characterPos.x + 2.2f, characterPos.y - 0.13f);
+                
+                break;
+            }
 
-        prefabDirect = Character.getInstance().CharacDirection == Character.Direction.lookLeft
-        ? 1
-        : 0;
+            case Character.Direction.lookUp:
+            {
+                
+                break;
+            }
+            case Character.Direction.lookDown:
+            {
+                break;
+            }
 
-        var a = GameObject.Instantiate(bulletPrefab, new Vector2(bulletPos.x, bulletPos.y), new Quaternion(0, prefabDirect, 0, 0));  
+            case Character.Direction.squat:
+            {
+                break;
+            }
+
+        }
+
+        //var a = GameObject.Instantiate(bulletPrefab, new Vector2(bulletPos.x, bulletPos.y),Quaternion.identity); 
 
     }
 

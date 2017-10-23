@@ -130,34 +130,25 @@ public class Character : MonoBehaviour
 
         //根据枪种类产生子弹（碰撞，位置，动画，轨迹，子弹伤害）
 
-        if (Input.GetKeyDown(KeyCode.J))
+        switch (Gun.holdGun)
         {
+            case Gun.gunKind.handGun:
+                {
+                    //Debug.Log("handGun");
+                    break;
+                }
+            case Gun.gunKind.shotGun:
+                {
+                    //Debug.Log("shotGun");
+                    GameObject.Find("SoundControler").GetComponent<AudioSource>().
+                    PlayOneShot(GameData.getInstance().Effect_shotGun);
 
+                    ShotGun.getInstance().bulletTraject();
 
-            switch (Gun.holdGun)
-            {
-                case Gun.gunKind.handGun:
-                    {
-                        //Debug.Log("handGun");
-                        break;
-                    }
-                case Gun.gunKind.shotGun:
-                    {
-                        //Debug.Log("shotGun");
-                        GameObject.Find("SoundControler").GetComponent<AudioSource>().
-                        PlayOneShot(GameData.getInstance().Effect_shotGun);
-
-                        ShotGun.getInstance().bulletTraject();
-
-                        break;
-                    }
-            }
+                    break;
+                }
         }
-
-
     }
-
-
 
 }
 
