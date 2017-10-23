@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AnimationParent : MonoBehaviour
+public class AnimationPlayer : MonoBehaviour
 {
     public List<Sprite> AnimationFrames;
     public int FramesIdx;
@@ -13,8 +13,8 @@ public class AnimationParent : MonoBehaviour
     public float CurrentTime;
     public float DeltaTime;
     public string Tag;  //区分多个脚本
-    	
-	// Use this for initialization
+
+    // Use this for initialization
     void Start()
     {
 
@@ -26,9 +26,19 @@ public class AnimationParent : MonoBehaviour
 
     }
 
-	virtual public void play()
-	{
+    public void play()
+    {
+        CurrentTime = Time.time;
 
-	}
+        if (CurrentTime - ScheduleUpdate > DeltaTime)
+        {
+            ScheduleUpdate = Time.time;
+
+            this.GetComponent<SpriteRenderer>().sprite = AnimationFrames[FramesIdx];
+
+            FramesIdx = FramesIdx < AnimationFrames.Count - 1 ? ++FramesIdx : FramesIdx = RepeatIdx;
+        }
+
+    }
 
 }

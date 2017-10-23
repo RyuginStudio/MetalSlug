@@ -69,7 +69,7 @@ public class Character : MonoBehaviour
     {
         switch (moveStatus)
         {
-            case "stand_MoveLeft":
+            case "MoveLeft":
                 {
                     if (downBody.transform.rotation.y != 0) //0：左；非0：右
                     {
@@ -77,12 +77,13 @@ public class Character : MonoBehaviour
                         downBody.transform.rotation = Quaternion.Euler(0, 0, 0);
                     }
 
+                    characSpeed = CharacDirection == Direction.squat ?  GameData.squatSpeed : GameData.normalSpeed;
                     wholeBody.transform.Translate(Vector3.left * Time.deltaTime * characSpeed);
 
                     break;
                 }
 
-            case "stand_MoveRight":
+            case "MoveRight":
                 {
                     if (downBody.transform.rotation.y == 0) //0：左；非0：右
                     {
@@ -90,8 +91,9 @@ public class Character : MonoBehaviour
                         downBody.transform.rotation = Quaternion.Euler(0, 180, 0);
                     }
 
+                    characSpeed = CharacDirection == Direction.squat ? GameData.squatSpeed : GameData.normalSpeed;
                     wholeBody.transform.Translate(Vector3.right * Time.deltaTime * characSpeed);
-                    
+
                     break;
                 }
 
@@ -102,9 +104,12 @@ public class Character : MonoBehaviour
 
     public void squat()
     {
-        var texture = (Texture2D)Resources.Load("Pictures/Character/downBody/squat/squat0");
-        var sprite = Sprite.Create(texture, new Rect(0, 0, 100, 100), new Vector2(0.5f, 0.5f));
-        downBody.GetComponent<SpriteRenderer>().sprite = sprite;
+        if (CharacStatus == Status.idle)
+        {
+            var texture = (Texture2D)Resources.Load("Pictures/Character/downBody/squat/squat0");
+            var sprite = Sprite.Create(texture, new Rect(0, 0, 100, 100), new Vector2(0.5f, 0.5f));
+            downBody.GetComponent<SpriteRenderer>().sprite = sprite;
+        }
 
         upBody.transform.position = new Vector3(upBody.transform.position.x, upBodyPos.y - 0.213f, upBody.transform.position.z);
     }
@@ -120,14 +125,13 @@ public class Character : MonoBehaviour
         }
 
         //下半身
-        var texture = (Texture2D)Resources.Load("Pictures/Character/downBody/normal/stand0");
-        var sprite_downBody = Sprite.Create(texture, new Rect(0, 0, 100, 100), new Vector2(0.5f, 0.5f));
-        Character.getInstance().downBody.GetComponent<SpriteRenderer>().sprite = sprite_downBody;
-
-        foreach (var item in downBody.GetComponents<MoveAnimation>())
+        if (CharacStatus == Status.idle)
         {
-            item.FramesIdx = 0;
+            var texture = (Texture2D)Resources.Load("Pictures/Character/downBody/normal/stand0");
+            var sprite_downBody = Sprite.Create(texture, new Rect(0, 0, 100, 100), new Vector2(0.5f, 0.5f));
+            Character.getInstance().downBody.GetComponent<SpriteRenderer>().sprite = sprite_downBody;
         }
+
     }
 
     public void shoot()  //射击

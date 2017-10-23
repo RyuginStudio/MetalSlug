@@ -15,7 +15,7 @@ public class GameData : MonoBehaviour
     {
         return instance;
     }
-	
+
     // Use this for initialization
     void Start()
     {
@@ -35,6 +35,6 @@ public class GameData : MonoBehaviour
     public GameObject Prefab_bulletPrefab;
 
     //角色数值
-    public static float normalSpeed = 4.5f;
-    public static float squatSpeed = 2.25f;
+    public static float normalSpeed = 4.0f;
+    public static float squatSpeed = 1.5f;
 }
