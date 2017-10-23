@@ -50,11 +50,17 @@ public class GameControler : MonoBehaviour
             if (Character.getInstance().CharacStatus != Character.Status.jump)
             {
                 Character.getInstance().CharacDirection = Character.Direction.squat;
+                Character.getInstance().characSpeed = GameData.squatSpeed;
             }
             else
             {
-
             }
+        }
+
+        //速度恢复
+        if (Character.getInstance().CharacDirection != Character.Direction.squat)
+        {
+            Character.getInstance().characSpeed = GameData.normalSpeed;
         }
 
         if (Input.GetKeyDown(KeyCode.J))

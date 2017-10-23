@@ -33,4 +33,8 @@ public class GameData : MonoBehaviour
 
     //预制件数据
     public GameObject Prefab_bulletPrefab;
+
+    //角色数值
+    public static float normalSpeed = 4.5f;
+    public static float squatSpeed = 2.25f;
 }

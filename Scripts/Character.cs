@@ -12,6 +12,7 @@ public class Character : MonoBehaviour
 
     //数据
     public Vector3 upBodyPos;
+    public float characSpeed;
 
     public enum Direction  //方向
     {
@@ -59,6 +60,7 @@ public class Character : MonoBehaviour
     {
         CharacDirection = Direction.lookRight;
         CharacStatus = Status.idle;
+        characSpeed = GameData.normalSpeed;
 
         upBodyPos = upBody.transform.position;
     }
@@ -74,7 +76,9 @@ public class Character : MonoBehaviour
                         upBody.transform.RotateAround(downBody.transform.position, Vector3.up, 180);  //锚点不是(0.5,0.5) 
                         downBody.transform.rotation = Quaternion.Euler(0, 0, 0);
                     }
-                    wholeBody.transform.Translate(Vector3.left * Time.deltaTime * 4.5f);
+
+                    wholeBody.transform.Translate(Vector3.left * Time.deltaTime * characSpeed);
+
                     break;
                 }
 
@@ -85,7 +89,9 @@ public class Character : MonoBehaviour
                         upBody.transform.RotateAround(downBody.transform.position, Vector3.up, 180);
                         downBody.transform.rotation = Quaternion.Euler(0, 180, 0);
                     }
-                    wholeBody.transform.Translate(Vector3.right * Time.deltaTime * 4.5f);
+
+                    wholeBody.transform.Translate(Vector3.right * Time.deltaTime * characSpeed);
+                    
                     break;
                 }
 
