@@ -19,7 +19,6 @@ public class ShotGun : Gun
 
     public override void init()
     {
-        //Debug.Log("init()");
         holdGun = gunKind.shotGun;
         bombCapacity = 1;
         fireCodeTime = 1;
@@ -67,7 +66,7 @@ public class ShotGun : Gun
 
         }
 
-        //var a = GameObject.Instantiate(bulletPrefab, new Vector2(bulletPos.x, bulletPos.y),Quaternion.identity); 
+        GameObject.Instantiate(bulletPrefab, new Vector2(bulletPos.x, bulletPos.y),Quaternion.identity); 
 
     }
 

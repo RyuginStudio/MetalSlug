@@ -14,6 +14,13 @@ public class Character : MonoBehaviour
     public Vector3 upBodyPos;
     public float characSpeed;
 
+    public enum Status  //状态
+    {
+        idle,
+        move,
+        jump
+    }
+
     public enum Direction  //方向
     {
         lookLeft,
@@ -23,16 +30,17 @@ public class Character : MonoBehaviour
         squat
     }
 
-    public enum Status  //状态
+    public enum AttackMode //攻击模式
     {
-        idle,
-        move,
-        attack,
-        jump
+        cut,
+        shoot,
+        grenade,
+        disAttack
     }
 
     public Status CharacStatus;
     public Direction CharacDirection;
+    public AttackMode CharacAttackMode;
 
     void Awake()
     {
@@ -61,6 +69,7 @@ public class Character : MonoBehaviour
         CharacStatus = Status.idle;
         characSpeed = GameData.normalSpeed;
         CharacDirection = Direction.lookRight;
+        CharacAttackMode = AttackMode.disAttack;
 
         upBodyPos = upBody.transform.position;
     }
@@ -158,9 +167,9 @@ public class Character : MonoBehaviour
         }
     }
 
-    public void knife()  //挥刀
+    public void cut()  //砍
     {
-        //近距离用刀
+        //近身武器
 
     }
 

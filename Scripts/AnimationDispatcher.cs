@@ -29,20 +29,42 @@ public class AnimationDispatcher : MonoBehaviour
                     {
                         case Character.Direction.lookUp:
                             {
-                                //动画
-                                foreach (var item in Character.getInstance().upBody.GetComponents<AnimationPlayer>())
+                                switch (Character.getInstance().CharacAttackMode)
                                 {
-                                    if (item.Tag == "UB_Idle_LookUp")
-                                    {
-                                        item.play();
-                                    }
-                                    else
-                                    {
-                                        item.FramesIdx = 0;
-                                    }
+                                    case Character.AttackMode.shoot:
+                                        {
+                                            foreach (var item in Character.getInstance().upBody.GetComponents<AnimationPlayer>())
+                                            {
+                                                if (item.Tag == "UB_Attack_ShotGun_LookUp")
+                                                {
+                                                    item.autoPlay = true;
+                                                }
+                                                else
+                                                {
+                                                    item.FramesIdx = 0;
+                                                }
+                                            }
+                                            break;
+                                        }
+                                    case Character.AttackMode.disAttack:
+                                        {
+                                            foreach (var item in Character.getInstance().upBody.GetComponents<AnimationPlayer>())
+                                            {
+                                                item.autoPlay = false;
+
+                                                if (item.Tag == "UB_Idle_LookUp")
+                                                {
+                                                    item.play();
+                                                }
+                                                else
+                                                {
+                                                    item.FramesIdx = 0;
+                                                }
+                                            }
+                                            break;
+                                        }
                                 }
 
-                                //逻辑
                                 Character.getInstance().restore();
 
                                 break;
@@ -53,16 +75,40 @@ public class AnimationDispatcher : MonoBehaviour
                             }
                         case Character.Direction.squat:
                             {
-                                foreach (var item in Character.getInstance().upBody.GetComponents<AnimationPlayer>())
+                                switch (Character.getInstance().CharacAttackMode)
                                 {
-                                    if (item.Tag == "UB_Idle_Normal")
-                                    {
-                                        item.play();
-                                    }
-                                    else
-                                    {
-                                        item.FramesIdx = 0;
-                                    }
+                                    case Character.AttackMode.shoot:
+                                        {
+                                            foreach (var item in Character.getInstance().upBody.GetComponents<AnimationPlayer>())
+                                            {
+                                                if (item.Tag == "UB_Attack_ShotGun_Normal")
+                                                {
+                                                    item.autoPlay = true;                              
+                                                }
+                                                else
+                                                {
+                                                    item.FramesIdx = 0;
+                                                }
+                                            }
+                                            break;
+                                        }
+                                    case Character.AttackMode.disAttack:
+                                        {
+                                            foreach (var item in Character.getInstance().upBody.GetComponents<AnimationPlayer>())
+                                            {
+                                                item.autoPlay = false;
+
+                                                if (item.Tag == "UB_Idle_Normal")
+                                                {
+                                                    item.play();
+                                                }
+                                                else
+                                                {
+                                                    item.FramesIdx = 0;
+                                                }
+                                            }
+                                            break;
+                                        }
                                 }
 
                                 Character.getInstance().squat();
@@ -71,16 +117,40 @@ public class AnimationDispatcher : MonoBehaviour
                             }
                         default: //idle + normal
                             {
-                                foreach (var item in Character.getInstance().upBody.GetComponents<AnimationPlayer>())
+                                 switch (Character.getInstance().CharacAttackMode)
                                 {
-                                    if (item.Tag == "UB_Idle_Normal")
-                                    {
-                                        item.play();
-                                    }
-                                    else
-                                    {
-                                        item.FramesIdx = 0;
-                                    }
+                                    case Character.AttackMode.shoot:
+                                        {
+                                            foreach (var item in Character.getInstance().upBody.GetComponents<AnimationPlayer>())
+                                            {
+                                                if (item.Tag == "UB_Attack_ShotGun_Normal")
+                                                {
+                                                    item.autoPlay = true;                                                  
+                                                }
+                                                else
+                                                {
+                                                    item.FramesIdx = 0;
+                                                }
+                                            }
+                                            break;
+                                        }
+                                    case Character.AttackMode.disAttack:
+                                        {
+                                            foreach (var item in Character.getInstance().upBody.GetComponents<AnimationPlayer>())
+                                            {
+                                                item.autoPlay = false;
+
+                                                if (item.Tag == "UB_Idle_Normal")
+                                                {
+                                                    item.play();
+                                                }
+                                                else
+                                                {
+                                                    item.FramesIdx = 0;
+                                                }
+                                            }
+                                            break;
+                                        }
                                 }
 
                                 Character.getInstance().restore();
@@ -248,10 +318,7 @@ public class AnimationDispatcher : MonoBehaviour
 
                     break;
                 }
-            case Character.Status.attack:
-                {
-                    break;
-                }
+
         }
     }
 }

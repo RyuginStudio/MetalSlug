@@ -12,6 +12,7 @@ public class AnimationPlayer : MonoBehaviour
     public float ScheduleUpdate;
     public float CurrentTime;
     public float DeltaTime;
+    public bool autoPlay;
     public string Tag;  //区分多个脚本
 
     // Use this for initialization
@@ -23,7 +24,10 @@ public class AnimationPlayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if (autoPlay == true)
+        {
+            play();
+        }
     }
 
     public void play()
@@ -36,7 +40,15 @@ public class AnimationPlayer : MonoBehaviour
 
             this.GetComponent<SpriteRenderer>().sprite = AnimationFrames[FramesIdx];
 
-            FramesIdx = FramesIdx < AnimationFrames.Count - 1 ? ++FramesIdx : FramesIdx = RepeatIdx;
+            if (FramesIdx < AnimationFrames.Count - 1)
+            {
+                ++FramesIdx;
+            }
+            else
+            {   
+                autoPlay = false;
+                FramesIdx = RepeatIdx;
+            }           
         }
 
     }
