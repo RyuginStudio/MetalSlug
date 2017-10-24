@@ -6,28 +6,36 @@ public class ShotGun : Gun
 {
     private static ShotGun instance;
 
+    private GameObject instateBulletPrefab;
+
+    void Start()
+    {
+
+    }
+
+    void Update()
+    {
+        currentTime = Time.time;
+
+        if (currentTime - coldTimeUpdate > fireColdTime)
+        {
+            coldTimeUpdate = Time.time;
+            admitShoot = true;           
+        }
+    }
+
+    void Awake()
+    {
+        instance = this;
+    }
+
+
     public static ShotGun getInstance()
     {
-        if (instance == null)
-        {
-            instance = new ShotGun();
-            instance.init();
-        }
-
         return instance;
     }
 
-    public override void init()
-    {
-        holdGun = gunKind.shotGun;
-        bombCapacity = 1;
-        fireCodeTime = 1;
-        damageValue = 100;
-
-        bulletPrefab = GameData.getInstance().Prefab_bulletPrefab;
-    }
-
-    public override void bulletTraject()
+    public new void bulletTraject()
     {
         var bulletPos = Character.getInstance().upBody.transform.position;
         var characterPos = Character.getInstance().upBody.transform.position;
@@ -36,42 +44,43 @@ public class ShotGun : Gun
         switch (Character.getInstance().CharacDirection)
         {
             case Character.Direction.lookLeft:
-            {
-                bulletPos = new Vector2(characterPos.x - 2.2f, characterPos.y - 0.13f);
-                
-                break;
-            }
-            
+                {
+                    bulletPos = new Vector2(characterPos.x - 2.2f, characterPos.y - 0.13f);
+
+                    break;
+                }
+
             case Character.Direction.lookRight:
-            {
-                bulletPos = new Vector2(characterPos.x + 2.2f, characterPos.y - 0.13f);
-                
-                break;
-            }
+                {
+                    bulletPos = new Vector2(characterPos.x + 2.2f, characterPos.y - 0.13f);
+
+                    break;
+                }
 
             case Character.Direction.lookUp:
-            {
-                
-                break;
-            }
+                {
+
+                    break;
+                }
             case Character.Direction.lookDown:
-            {
-                break;
-            }
+                {
+                    break;
+                }
 
             case Character.Direction.squat:
-            {
-                break;
-            }
+                {
+                    break;
+                }
 
         }
 
-        //GameObject.Instantiate(bulletPrefab, new Vector2(bulletPos.x, bulletPos.y),Quaternion.identity); 
+        instateBulletPrefab = GameObject.Instantiate(bulletPrefab, new Vector2(bulletPos.x, bulletPos.y), Quaternion.identity);
 
+        Invoke("bulletDestory", bulletDestoryTime);
     }
 
-    public override void bulletRemove()
+    public new void bulletDestory()
     {
-        throw new System.NotImplementedException();
+        GameObject.Destroy(instateBulletPrefab);
     }
 }

@@ -2,23 +2,43 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-abstract public class Gun
+public class Gun : MonoBehaviour
 {
+    public float currentTime;
+    public float coldTimeUpdate;
+
+    void Awake()
+    {
+
+    }
+
+    void Update()
+    {
+
+    }
+
     public enum gunKind
     {
         handGun,
         shotGun,
     }
 
-    public static gunKind holdGun = gunKind.shotGun;  //当前持枪	
+    public static gunKind holdGun = gunKind.shotGun;  //当前持枪
+    public bool admitShoot;
     public int bombCapacity;    //弹容
-    public float fireCodeTime;  //射击冷却时间
+    public float fireColdTime;  //射击冷却时间
+    public float bulletDestoryTime; //子弹销毁时间
     public int damageValue;     //伤害值
     public GameObject bulletPrefab;	 //子弹预制件
 
 
-    abstract public void init();  //枪支初始化
-    abstract public void bulletTraject();  //弹道函数
-    abstract public void bulletRemove();   //子弹回收
+    public void bulletTraject()  //弹道函数
+    {
+
+    }
+    public void bulletDestory()   //子弹回收
+    {
+
+    }
 
 }

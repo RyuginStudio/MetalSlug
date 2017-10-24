@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class AnimationDispatcher : MonoBehaviour
 {
+    private int frameIdxAttackUp;
+    private int frameIdxAttackNormal;
 
     // Use this for initialization
     void Start()
@@ -37,10 +39,19 @@ public class AnimationDispatcher : MonoBehaviour
                                             {
                                                 if (item.Tag == "UB_Attack_ShotGun_LookUp")
                                                 {
+                                                    //动画平稳过渡
+                                                    foreach (var t in Character.getInstance().upBody.GetComponents<AnimationPlayer>())
+                                                    {
+                                                        if (t.Tag == "UB_Attack_ShotGun_Normal" && t.FramesIdx != 0)
+                                                        {
+                                                            item.FramesIdx = t.FramesIdx;
+                                                        }
+                                                    }
                                                     item.autoPlay = true;
                                                 }
                                                 else
                                                 {
+                                                    item.autoPlay = false; //停止其他开枪动画
                                                     item.FramesIdx = 0;
                                                 }
                                             }
@@ -81,12 +92,21 @@ public class AnimationDispatcher : MonoBehaviour
                                         {
                                             foreach (var item in Character.getInstance().upBody.GetComponents<AnimationPlayer>())
                                             {
+                                                //动画平稳过渡
                                                 if (item.Tag == "UB_Attack_ShotGun_Normal")
                                                 {
-                                                    item.autoPlay = true;                              
+                                                    foreach (var t in Character.getInstance().upBody.GetComponents<AnimationPlayer>())
+                                                    {
+                                                        if (t.Tag == "UB_Attack_ShotGun_LookUp" && t.FramesIdx != 0)
+                                                        {
+                                                            item.FramesIdx = t.FramesIdx;
+                                                        }
+                                                    }
+                                                    item.autoPlay = true;
                                                 }
                                                 else
                                                 {
+                                                    item.autoPlay = false; //停止其他开枪动画
                                                     item.FramesIdx = 0;
                                                 }
                                             }
@@ -117,7 +137,7 @@ public class AnimationDispatcher : MonoBehaviour
                             }
                         default: //idle + normal
                             {
-                                 switch (Character.getInstance().CharacAttackMode)
+                                switch (Character.getInstance().CharacAttackMode)
                                 {
                                     case Character.AttackMode.shoot:
                                         {
@@ -125,10 +145,19 @@ public class AnimationDispatcher : MonoBehaviour
                                             {
                                                 if (item.Tag == "UB_Attack_ShotGun_Normal")
                                                 {
-                                                    item.autoPlay = true;                                                  
+                                                    //动画平稳过渡
+                                                    item.autoPlay = true;
+                                                    foreach (var t in Character.getInstance().upBody.GetComponents<AnimationPlayer>())
+                                                    {
+                                                        if (t.Tag == "UB_Attack_ShotGun_LookUp" && t.FramesIdx != 0)
+                                                        {
+                                                            item.FramesIdx = t.FramesIdx;
+                                                        }
+                                                    }
                                                 }
                                                 else
                                                 {
+                                                    item.autoPlay = false; //停止其他开枪动画
                                                     item.FramesIdx = 0;
                                                 }
                                             }

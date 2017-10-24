@@ -69,11 +69,10 @@ public class UGUISpriteAnimation : MonoBehaviour
 
     void Update()
     {
-        if (!IsPlaying || 0 == FrameCount || FrameCount == mCurFrame)  //修改：播完动画后销毁
+        if (!IsPlaying || 0 == FrameCount || FrameCount == mCurFrame)
         {
+            //状态改变以动画结束为准
             Character.getInstance().CharacAttackMode = Character.AttackMode.disAttack;
-            GameObject.Destroy(GameObject.FindGameObjectWithTag("ShotGunBullet")); //这里需要修改 子弹不该在此销毁
-            Debug.Log("destory");
             return;
         }
 
