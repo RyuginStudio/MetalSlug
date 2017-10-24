@@ -78,7 +78,7 @@ public class ShotGun : Gun
         ? 1
         : 0;
 
-        var a = GameObject.Instantiate(bulletPrefab, new Vector2(bulletPos.x, bulletPos.y), new Quaternion(0, prefabDirect, 0, 0));  
+        instateBulletPrefab = GameObject.Instantiate(bulletPrefab, new Vector2(bulletPos.x, bulletPos.y), new Quaternion(0, prefabDirect, 0, 0));  
 
         Invoke("bulletDestory", bulletDestoryTime);
     }
