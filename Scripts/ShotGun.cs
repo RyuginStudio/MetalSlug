@@ -66,7 +66,7 @@ public class ShotGun : Gun
 
         }
 
-        GameObject.Instantiate(bulletPrefab, new Vector2(bulletPos.x, bulletPos.y),Quaternion.identity); 
+        //GameObject.Instantiate(bulletPrefab, new Vector2(bulletPos.x, bulletPos.y),Quaternion.identity); 
 
     }
 
