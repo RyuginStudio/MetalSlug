@@ -8,6 +8,8 @@ public class ShotGun : Gun
 
     private GameObject instateBulletPrefab;
 
+    private int prefabDirect;
+
     void Start()
     {
 
@@ -46,14 +48,12 @@ public class ShotGun : Gun
             case Character.Direction.lookLeft:
                 {
                     bulletPos = new Vector2(characterPos.x - 2.2f, characterPos.y - 0.13f);
-
                     break;
                 }
 
             case Character.Direction.lookRight:
                 {
                     bulletPos = new Vector2(characterPos.x + 2.2f, characterPos.y - 0.13f);
-
                     break;
                 }
 
@@ -74,7 +74,11 @@ public class ShotGun : Gun
 
         }
 
-        instateBulletPrefab = GameObject.Instantiate(bulletPrefab, new Vector2(bulletPos.x, bulletPos.y), Quaternion.identity);
+         prefabDirect = Character.getInstance().CharacDirection == Character.Direction.lookLeft
+        ? 1
+        : 0;
+
+        var a = GameObject.Instantiate(bulletPrefab, new Vector2(bulletPos.x, bulletPos.y), new Quaternion(0, prefabDirect, 0, 0));  
 
         Invoke("bulletDestory", bulletDestoryTime);
     }
