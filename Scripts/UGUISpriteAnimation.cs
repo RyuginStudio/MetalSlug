@@ -1,4 +1,4 @@
-﻿//用法：将代码加载到Image物体上，将需要播放的图片动画每一帧放到SpriteFrame数组中，就可以进行播放了
+﻿//用法：挂载至GameObject或者预制件
 //来源：http://blog.csdn.net/beihuanlihe130/article/details/54289036
 //修改：vszed
 
@@ -71,8 +71,6 @@ public class UGUISpriteAnimation : MonoBehaviour
     {
         if (!IsPlaying || 0 == FrameCount || FrameCount == mCurFrame)
         {
-            //状态改变以动画结束为准
-            Character.getInstance().CharacAttackMode = Character.AttackMode.disAttack;
             return;
         }
 
@@ -80,7 +78,7 @@ public class UGUISpriteAnimation : MonoBehaviour
         if (mDelta > 1 / FPS)
         {
             mDelta = 0;
-            if(Foward)
+            if (Foward)
             {
                 mCurFrame++;
             }
@@ -101,17 +99,17 @@ public class UGUISpriteAnimation : MonoBehaviour
                     return;
                 }
             }
-            else if (mCurFrame<0)
+            else if (mCurFrame < 0)
             {
                 if (Loop)
                 {
-                    mCurFrame = FrameCount-1;
+                    mCurFrame = FrameCount - 1;
                 }
                 else
                 {
                     IsPlaying = false;
                     return;
-                }          
+                }
             }
 
             SetSprite(mCurFrame);

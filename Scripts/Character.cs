@@ -136,7 +136,7 @@ public class Character : MonoBehaviour
         {
             var texture = (Texture2D)Resources.Load("Pictures/Character/downBody/normal/stand0");
             var sprite_downBody = Sprite.Create(texture, new Rect(0, 0, 100, 100), new Vector2(0.5f, 0.5f));
-            Character.getInstance().downBody.GetComponent<SpriteRenderer>().sprite = sprite_downBody;
+            downBody.GetComponent<SpriteRenderer>().sprite = sprite_downBody;
         }
 
     }

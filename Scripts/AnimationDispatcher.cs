@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class AnimationDispatcher : MonoBehaviour
 {
-    private int frameIdxAttackUp;
-    private int frameIdxAttackNormal;
-
     // Use this for initialization
     void Start()
     {
@@ -146,7 +143,6 @@ public class AnimationDispatcher : MonoBehaviour
                                                 if (item.Tag == "UB_Attack_ShotGun_Normal")
                                                 {
                                                     //动画平稳过渡
-                                                    item.autoPlay = true;
                                                     foreach (var t in Character.getInstance().upBody.GetComponents<AnimationPlayer>())
                                                     {
                                                         if (t.Tag == "UB_Attack_ShotGun_LookUp" && t.FramesIdx != 0)
@@ -154,6 +150,7 @@ public class AnimationDispatcher : MonoBehaviour
                                                             item.FramesIdx = t.FramesIdx;
                                                         }
                                                     }
+                                                    item.autoPlay = true;
                                                 }
                                                 else
                                                 {
@@ -197,29 +194,73 @@ public class AnimationDispatcher : MonoBehaviour
                     {
                         case Character.Direction.lookUp:
                             {
-                                //动画
-                                foreach (var item in Character.getInstance().upBody.GetComponents<AnimationPlayer>())
+                                switch (Character.getInstance().CharacAttackMode)
                                 {
-                                    if (item.Tag == "UB_Idle_LookUp")
-                                    {
-                                        item.play();
-                                    }
-                                    else
-                                    {
-                                        item.FramesIdx = 0;
-                                    }
-                                }
+                                    case Character.AttackMode.shoot:
+                                        {
+                                            foreach (var item in Character.getInstance().upBody.GetComponents<AnimationPlayer>())
+                                            {
+                                                if (item.Tag == "UB_Attack_ShotGun_LookUp")
+                                                {
+                                                    //动画平稳过渡
+                                                    foreach (var t in Character.getInstance().upBody.GetComponents<AnimationPlayer>())
+                                                    {
+                                                        if (t.Tag == "UB_Attack_ShotGun_Normal" && t.FramesIdx != 0)
+                                                        {
+                                                            item.FramesIdx = t.FramesIdx;
+                                                        }
+                                                    }
+                                                    item.autoPlay = true;
+                                                }
+                                                else
+                                                {
+                                                    item.autoPlay = false; //停止其他开枪动画
+                                                    item.FramesIdx = 0;
+                                                }
+                                            }
+                                            foreach (var item in Character.getInstance().downBody.GetComponents<AnimationPlayer>())
+                                            {
+                                                if (item.Tag == "DB_Move_Normal")
+                                                {
+                                                    item.play();
+                                                }
+                                                else
+                                                {
+                                                    item.FramesIdx = 0;
+                                                    item.autoPlay = false;
+                                                }
+                                            }
+                                            break;
+                                        }
+                                    case Character.AttackMode.disAttack:
+                                        {
+                                            foreach (var item in Character.getInstance().upBody.GetComponents<AnimationPlayer>())
+                                            {
+                                                if (item.Tag == "UB_Idle_LookUp")
+                                                {
+                                                    item.play();
+                                                }
+                                                else
+                                                {
+                                                    item.FramesIdx = 0;
+                                                    item.autoPlay = false;
+                                                }
+                                            }
 
-                                foreach (var item in Character.getInstance().downBody.GetComponents<AnimationPlayer>())
-                                {
-                                    if (item.Tag == "DB_Move_Normal")
-                                    {
-                                        item.play();
-                                    }
-                                    else
-                                    {
-                                        item.FramesIdx = 0;
-                                    }
+                                            foreach (var item in Character.getInstance().downBody.GetComponents<AnimationPlayer>())
+                                            {
+                                                if (item.Tag == "DB_Move_Normal")
+                                                {
+                                                    item.play();
+                                                }
+                                                else
+                                                {
+                                                    item.FramesIdx = 0;
+                                                    item.autoPlay = false;
+                                                }
+                                            }
+                                            break;
+                                        }
                                 }
 
                                 //逻辑
@@ -233,29 +274,77 @@ public class AnimationDispatcher : MonoBehaviour
                             }
                         case Character.Direction.lookLeft:
                             {
-                                //动画
-                                foreach (var item in Character.getInstance().upBody.GetComponents<AnimationPlayer>())
+                                switch (Character.getInstance().CharacAttackMode)
                                 {
-                                    if (item.Tag == "UB_Idle_Normal")
-                                    {
-                                        item.play();
-                                    }
-                                    else
-                                    {
-                                        item.FramesIdx = 0;
-                                    }
-                                }
+                                    case Character.AttackMode.shoot:
+                                        {
+                                            foreach (var item in Character.getInstance().upBody.GetComponents<AnimationPlayer>())
+                                            {
+                                                if (item.Tag == "UB_Attack_ShotGun_Normal")
+                                                {
+                                                    //动画平稳过渡
+                                                    foreach (var t in Character.getInstance().upBody.GetComponents<AnimationPlayer>())
+                                                    {
+                                                        if (t.Tag == "UB_Attack_ShotGun_LookUp" && t.FramesIdx != 0)
+                                                        {
+                                                            item.FramesIdx = t.FramesIdx;
+                                                        }
+                                                    }
+                                                    item.autoPlay = true;
+                                                }
+                                                else
+                                                {
+                                                    item.autoPlay = false; //停止其他开枪动画
+                                                    item.FramesIdx = 0;
+                                                }
+                                            }
+                                            foreach (var item in Character.getInstance().downBody.GetComponents<AnimationPlayer>())
+                                            {
+                                                if (item.Tag == "DB_Move_Normal")
+                                                {
+                                                    item.play();
+                                                }
+                                                else
+                                                {
+                                                    item.autoPlay = false;
+                                                    item.FramesIdx = 0;
+                                                }
+                                            }
 
-                                foreach (var item in Character.getInstance().downBody.GetComponents<AnimationPlayer>())
-                                {
-                                    if (item.Tag == "DB_Move_Normal")
-                                    {
-                                        item.play();
-                                    }
-                                    else
-                                    {
-                                        item.FramesIdx = 0;
-                                    }
+
+                                            break;
+                                        }
+                                    case Character.AttackMode.disAttack:
+                                        {
+                                            //动画
+                                            foreach (var item in Character.getInstance().upBody.GetComponents<AnimationPlayer>())
+                                            {
+                                                if (item.Tag == "UB_Idle_Normal")
+                                                {
+                                                    item.play();
+                                                }
+                                                else
+                                                {
+                                                    item.autoPlay = false;
+                                                    item.FramesIdx = 0;
+                                                }
+                                            }
+
+                                            foreach (var item in Character.getInstance().downBody.GetComponents<AnimationPlayer>())
+                                            {
+                                                if (item.Tag == "DB_Move_Normal")
+                                                {
+                                                    item.play();
+                                                }
+                                                else
+                                                {
+                                                    item.autoPlay = false;
+                                                    item.FramesIdx = 0;
+                                                }
+                                            }
+
+                                            break;
+                                        }
                                 }
 
                                 //逻辑
@@ -265,29 +354,77 @@ public class AnimationDispatcher : MonoBehaviour
                             }
                         case Character.Direction.lookRight:
                             {
-                                //动画
-                                foreach (var item in Character.getInstance().upBody.GetComponents<AnimationPlayer>())
+                                switch (Character.getInstance().CharacAttackMode)
                                 {
-                                    if (item.Tag == "UB_Idle_Normal")
-                                    {
-                                        item.play();
-                                    }
-                                    else
-                                    {
-                                        item.FramesIdx = 0;
-                                    }
-                                }
+                                    case Character.AttackMode.shoot:
+                                        {
+                                            foreach (var item in Character.getInstance().upBody.GetComponents<AnimationPlayer>())
+                                            {
+                                                if (item.Tag == "UB_Attack_ShotGun_Normal")
+                                                {
+                                                    //动画平稳过渡
+                                                    foreach (var t in Character.getInstance().upBody.GetComponents<AnimationPlayer>())
+                                                    {
+                                                        if (t.Tag == "UB_Attack_ShotGun_LookUp" && t.FramesIdx != 0)
+                                                        {
+                                                            item.FramesIdx = t.FramesIdx;
+                                                        }
+                                                    }
+                                                    item.autoPlay = true;
+                                                }
+                                                else
+                                                {
+                                                    item.autoPlay = false; //停止其他开枪动画
+                                                    item.FramesIdx = 0;
+                                                }
+                                            }
+                                            foreach (var item in Character.getInstance().downBody.GetComponents<AnimationPlayer>())
+                                            {
+                                                if (item.Tag == "DB_Move_Normal")
+                                                {
+                                                    item.play();
+                                                }
+                                                else
+                                                {
+                                                    item.autoPlay = false;
+                                                    item.FramesIdx = 0;
+                                                }
+                                            }
 
-                                foreach (var item in Character.getInstance().downBody.GetComponents<AnimationPlayer>())
-                                {
-                                    if (item.Tag == "DB_Move_Normal")
-                                    {
-                                        item.play();
-                                    }
-                                    else
-                                    {
-                                        item.FramesIdx = 0;
-                                    }
+
+                                            break;
+                                        }
+                                    case Character.AttackMode.disAttack:
+                                        {
+                                            //动画
+                                            foreach (var item in Character.getInstance().upBody.GetComponents<AnimationPlayer>())
+                                            {
+                                                if (item.Tag == "UB_Idle_Normal")
+                                                {
+                                                    item.play();
+                                                }
+                                                else
+                                                {
+                                                    item.autoPlay = false;
+                                                    item.FramesIdx = 0;
+                                                }
+                                            }
+
+                                            foreach (var item in Character.getInstance().downBody.GetComponents<AnimationPlayer>())
+                                            {
+                                                if (item.Tag == "DB_Move_Normal")
+                                                {
+                                                    item.play();
+                                                }
+                                                else
+                                                {
+                                                    item.autoPlay = false;
+                                                    item.FramesIdx = 0;
+                                                }
+                                            }
+
+                                            break;
+                                        }
                                 }
 
                                 //逻辑
@@ -297,49 +434,80 @@ public class AnimationDispatcher : MonoBehaviour
                             }
                         case Character.Direction.squat:
                             {
-                                foreach (var item in Character.getInstance().upBody.GetComponents<AnimationPlayer>())
+                                switch (Character.getInstance().CharacAttackMode)
                                 {
-                                    if (item.Tag == "UB_Idle_Normal")
-                                    {
-                                        item.play();
-                                    }
-                                    else
-                                    {
-                                        item.FramesIdx = 0;
-                                    }
+                                    case Character.AttackMode.shoot:
+                                        {
+                                            foreach (var item in Character.getInstance().upBody.GetComponents<AnimationPlayer>())
+                                            {
+                                                if (item.Tag == "UB_Attack_ShotGun_Normal")
+                                                {
+                                                    //动画平稳过渡
+                                                    foreach (var t in Character.getInstance().upBody.GetComponents<AnimationPlayer>())
+                                                    {
+                                                        if (t.Tag == "UB_Attack_ShotGun_LookUp" && t.FramesIdx != 0)
+                                                        {
+                                                            item.FramesIdx = t.FramesIdx;
+                                                        }
+                                                    }
+                                                    item.autoPlay = true;
+                                                }
+                                                else
+                                                {
+                                                    item.autoPlay = false; //停止其他开枪动画
+                                                    item.FramesIdx = 0;
+                                                }
+                                            }
+                                            foreach (var item in Character.getInstance().downBody.GetComponents<AnimationPlayer>())
+                                            {
+                                                if (item.Tag == "DB_Move_Squat")
+                                                {
+                                                    item.play();
+                                                }
+                                                else
+                                                {
+                                                    item.autoPlay = false;
+                                                    item.FramesIdx = 0;
+                                                }
+                                            }
+
+                                            Character.getInstance().squat();
+
+                                            break;
+                                        }
+                                    case Character.AttackMode.disAttack:
+                                        {
+                                            foreach (var item in Character.getInstance().upBody.GetComponents<AnimationPlayer>())
+                                            {
+                                                if (item.Tag == "UB_Idle_Normal")
+                                                {
+                                                    item.play();
+                                                }
+                                                else
+                                                {
+                                                    item.autoPlay = false;
+                                                    item.FramesIdx = 0;
+                                                }
+                                            }
+
+                                            foreach (var item in Character.getInstance().downBody.GetComponents<AnimationPlayer>())
+                                            {
+                                                if (item.Tag == "DB_Move_Squat")
+                                                {
+                                                    item.play();
+                                                }
+                                                else
+                                                {
+                                                    item.autoPlay = false;
+                                                    item.FramesIdx = 0;
+                                                }
+                                            }
+
+                                            Character.getInstance().squat();
+
+                                            break;
+                                        }
                                 }
-
-                                foreach (var item in Character.getInstance().downBody.GetComponents<AnimationPlayer>())
-                                {
-                                    if (item.Tag == "DB_Move_Squat")
-                                    {
-                                        item.play();
-                                    }
-                                    else
-                                    {
-                                        item.FramesIdx = 0;
-                                    }
-                                }
-
-                                Character.getInstance().squat();
-
-                                break;
-                            }
-                        default: //idle + normal
-                            {
-                                foreach (var item in Character.getInstance().upBody.GetComponents<AnimationPlayer>())
-                                {
-                                    if (item.Tag == "UB_Idle_Normal")
-                                    {
-                                        item.play();
-                                    }
-                                    else
-                                    {
-                                        item.FramesIdx = 0;
-                                    }
-                                }
-
-                                Character.getInstance().restore();
 
                                 break;
                             }

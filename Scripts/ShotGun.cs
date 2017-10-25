@@ -8,7 +8,8 @@ public class ShotGun : Gun
 
     private GameObject instateBulletPrefab;
 
-    private int prefabDirect;
+    //预制件朝向
+    private Quaternion prefabDirect;
 
     void Start()
     {
@@ -22,7 +23,7 @@ public class ShotGun : Gun
         if (currentTime - coldTimeUpdate > fireColdTime)
         {
             coldTimeUpdate = Time.time;
-            admitShoot = true;           
+            admitShoot = true;
         }
     }
 
@@ -48,18 +49,29 @@ public class ShotGun : Gun
             case Character.Direction.lookLeft:
                 {
                     bulletPos = new Vector2(characterPos.x - 2.2f, characterPos.y - 0.13f);
+                    prefabDirect = Quaternion.Euler(0, 180, 0);
                     break;
                 }
 
             case Character.Direction.lookRight:
                 {
                     bulletPos = new Vector2(characterPos.x + 2.2f, characterPos.y - 0.13f);
+                    prefabDirect = Quaternion.Euler(0, 0, 0);
                     break;
                 }
 
             case Character.Direction.lookUp:
                 {
-
+                    if(Character.getInstance().downBody.transform.rotation.y != 0) //0：左；非0：右
+                    {
+                        bulletPos = new Vector2(Character.getInstance().downBody.transform.position.x + 0.2f, Character.getInstance().downBody.transform.position.y + 3.7f);
+                        prefabDirect = Quaternion.Euler(0, 0, 90);
+                    }
+                    else
+                    {
+                        bulletPos = new Vector2(Character.getInstance().downBody.transform.position.x - 0.2f, Character.getInstance().downBody.transform.position.y + 3.7f);
+                        prefabDirect = Quaternion.Euler(0, 180, 90);
+                    }
                     break;
                 }
             case Character.Direction.lookDown:
@@ -69,22 +81,36 @@ public class ShotGun : Gun
 
             case Character.Direction.squat:
                 {
+                    if (Character.getInstance().downBody.transform.rotation.y != 0) //0：左；非0：右
+                    {
+                        bulletPos = new Vector2(characterPos.x + 2.2f, characterPos.y - 0.13f);
+                        prefabDirect = new Quaternion(0, 0, 0, 0);
+
+                    }
+                    else
+                    {
+                        bulletPos = new Vector2(characterPos.x - 2.2f, characterPos.y - 0.13f);
+                        prefabDirect = new Quaternion(0, 180, 0, 0);
+                    }
                     break;
                 }
 
-        }
+        }      
 
-         prefabDirect = Character.getInstance().CharacDirection == Character.Direction.lookLeft
-        ? 1
-        : 0;
-
-        instateBulletPrefab = GameObject.Instantiate(bulletPrefab, new Vector2(bulletPos.x, bulletPos.y), new Quaternion(0, prefabDirect, 0, 0));  
-
+        instateBulletPrefab = GameObject.Instantiate(bulletPrefab, new Vector2(bulletPos.x, bulletPos.y), prefabDirect);
+        
         Invoke("bulletDestory", bulletDestoryTime);
     }
 
     public new void bulletDestory()
     {
         GameObject.Destroy(instateBulletPrefab);
+        changeAttackMode();
+    }
+
+    //这个函数具体由谁调用，根据具体枪而不同
+    public void changeAttackMode()
+    {
+        Character.getInstance().CharacAttackMode = Character.AttackMode.disAttack;
     }
 }
