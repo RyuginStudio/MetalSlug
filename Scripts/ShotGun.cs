@@ -105,12 +105,6 @@ public class ShotGun : Gun
     public new void bulletDestory()
     {
         GameObject.Destroy(instateBulletPrefab);
-        changeAttackMode();
     }
 
-    //这个函数具体由谁调用，根据具体枪而不同
-    public void changeAttackMode()
-    {
-        Character.getInstance().CharacAttackMode = Character.AttackMode.disAttack;
-    }
 }

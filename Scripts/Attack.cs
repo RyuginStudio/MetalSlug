@@ -2,11 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-//攻击是瞬发的事情
-
 public class Attack : MonoBehaviour
 {
-
     // Use this for initialization
     void Start()
     {
@@ -16,38 +13,95 @@ public class Attack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.J) && Character.getInstance().CharacAttackMode == Character.AttackMode.disAttack)
+        if (Input.GetKeyDown(KeyCode.J))
         {
-            //这里需要判断具体的攻击模式：砍|射击(需要改进)
-            switch (Gun.holdGun)
+            switch (Character.getInstance().CharacStatus)
             {
-                case Gun.gunKind.handGun:
+                case Character.Status.idle:
                     {
+                        switch (Gun.holdGun)
+                        {
+                            case Gun.gunKind.handGun:
+                                {
+                                    break;
+                                }
+
+                            case Gun.gunKind.shotGun:
+                                {
+                                    if (ShotGun.getInstance().admitShoot == true) //冷却时间定时器
+                                    {
+                                        Character.getInstance().shoot();
+                                        ShotGun.getInstance().admitShoot = false;
+
+                                        Character.getInstance().CharacAttackMode = Character.AttackMode.shoot;
+                                        Character.getInstance().CharacStatus = Character.Status.idleAttack;
+                                    }
+
+                                    break;
+                                }
+                        }
+
                         break;
                     }
-
-                case Gun.gunKind.shotGun:
+                case Character.Status.move:
                     {
-                        if (ShotGun.getInstance().admitShoot == true) //冷却时间定时器
+                        switch (Gun.holdGun)
                         {
-                            Character.getInstance().CharacAttackMode = Character.AttackMode.shoot;
-                            Character.getInstance().shoot();
-                            ShotGun.getInstance().admitShoot = false;
+                            case Gun.gunKind.handGun:
+                                {
+                                    break;
+                                }
+
+                            case Gun.gunKind.shotGun:
+                                {
+                                    if (ShotGun.getInstance().admitShoot == true) //冷却时间定时器
+                                    {
+                                        Character.getInstance().shoot();
+                                        ShotGun.getInstance().admitShoot = false;
+
+                                        Character.getInstance().CharacAttackMode = Character.AttackMode.shoot;
+                                        Character.getInstance().CharacStatus = Character.Status.moveAttack;
+                                    }
+
+                                    break;
+                                }
                         }
+
+                        break;
+                    }
+                case Character.Status.jump:
+                    {
+                        switch (Gun.holdGun)
+                        {
+                            case Gun.gunKind.handGun:
+                                {
+                                    break;
+                                }
+
+                            case Gun.gunKind.shotGun:
+                                {
+                                    if (ShotGun.getInstance().admitShoot == true) //冷却时间定时器
+                                    {
+                                        Character.getInstance().shoot();
+                                        ShotGun.getInstance().admitShoot = false;
+
+                                        Character.getInstance().CharacAttackMode = Character.AttackMode.shoot;
+                                        Character.getInstance().CharacStatus = Character.Status.jumpAttack;
+                                    }
+
+                                    break;
+                                }
+                        }
+
                         break;
                     }
             }
 
         }
+    }
 
-        if (Input.GetKey(KeyCode.W))
-        {
-            Character.getInstance().CharacDirection = Character.Direction.lookUp;
-        }
-        else if (Input.GetKey(KeyCode.S))
-        {
-            Character.getInstance().CharacDirection = Character.Direction.squat;
-        }
-
+    public static void changeAttackMode()
+    {
+        Character.getInstance().CharacAttackMode = Character.AttackMode.disAttack;
     }
 }

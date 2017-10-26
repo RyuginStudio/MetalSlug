@@ -18,7 +18,10 @@ public class Character : MonoBehaviour
     {
         idle,
         move,
-        jump
+        jump,
+        idleAttack,
+        moveAttack,
+        jumpAttack
     }
 
     public enum Direction  //方向
@@ -111,7 +114,7 @@ public class Character : MonoBehaviour
 
     public void squat()
     {
-        if (CharacStatus == Status.idle)
+        if (CharacStatus == Status.idle || CharacStatus == Status.idleAttack)
         {
             var texture = (Texture2D)Resources.Load("Pictures/Character/downBody/squat/squat0");
             var sprite = Sprite.Create(texture, new Rect(0, 0, 100, 100), new Vector2(0.5f, 0.5f));
@@ -132,7 +135,7 @@ public class Character : MonoBehaviour
         }
 
         //下半身
-        if (CharacStatus == Status.idle)
+        if (CharacStatus == Status.idle || CharacStatus == Status.idleAttack)
         {
             var texture = (Texture2D)Resources.Load("Pictures/Character/downBody/normal/stand0");
             var sprite_downBody = Sprite.Create(texture, new Rect(0, 0, 100, 100), new Vector2(0.5f, 0.5f));
@@ -159,9 +162,7 @@ public class Character : MonoBehaviour
                     //Debug.Log("shotGun");
                     GameObject.Find("SoundControler").GetComponent<AudioSource>().
                     PlayOneShot(GameData.getInstance().Effect_shotGun);
-
                     ShotGun.getInstance().bulletTraject();
-
                     break;
                 }
         }
@@ -170,7 +171,6 @@ public class Character : MonoBehaviour
     public void cut()  //砍
     {
         //近身武器
-
     }
 
 }

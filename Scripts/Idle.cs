@@ -17,7 +17,11 @@ public class Idle : MonoBehaviour
     {
         if ((!Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D)) || (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.D)))
         {
-            Character.getInstance().CharacStatus = Character.Status.idle;
+            if (Character.getInstance().CharacAttackMode == Character.AttackMode.disAttack)
+            {
+                Character.getInstance().CharacStatus = Character.Status.idle;
+            }
+
         }
 
         if ((!Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.S)) || (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.S)))
