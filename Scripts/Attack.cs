@@ -98,6 +98,16 @@ public class Attack : MonoBehaviour
             }
 
         }
+
+        //状态切换
+        if ((!Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D)) || (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.D)))
+        {
+            if (Character.getInstance().CharacAttackMode != Character.AttackMode.disAttack)
+            {
+                Character.getInstance().CharacStatus = Character.Status.idleAttack;
+            }
+            return;
+        }
     }
 
     public static void changeAttackMode()
