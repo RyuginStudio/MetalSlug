@@ -108,6 +108,22 @@ public class Attack : MonoBehaviour
             }
             return;
         }
+
+        if (Input.GetKey(KeyCode.A))
+        {
+            if (Character.getInstance().CharacAttackMode != Character.AttackMode.disAttack)
+            {
+                Character.getInstance().CharacStatus = Character.Status.moveAttack;
+            }
+
+        }
+        else if (Input.GetKey(KeyCode.D))
+        {
+            if (Character.getInstance().CharacAttackMode != Character.AttackMode.disAttack)
+            {
+                Character.getInstance().CharacStatus = Character.Status.moveAttack;
+            }
+        }
     }
 
     public static void changeAttackMode()
