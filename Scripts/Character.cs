@@ -11,7 +11,6 @@ public class Character : MonoBehaviour
     public GameObject wholeBody;
 
     //数据
-    public Vector3 upBodyPos;
     public float characSpeed;
 
     public enum Status  //状态
@@ -73,8 +72,6 @@ public class Character : MonoBehaviour
         characSpeed = GameData.normalSpeed;
         CharacDirection = Direction.lookRight;
         CharacAttackMode = AttackMode.disAttack;
-
-        upBodyPos = upBody.transform.position;
     }
 
     public void move(string moveStatus)  //角色移动
@@ -121,18 +118,16 @@ public class Character : MonoBehaviour
             downBody.GetComponent<SpriteRenderer>().sprite = sprite;
         }
 
-        upBody.transform.position = new Vector3(upBody.transform.position.x, upBodyPos.y - 0.213f, upBody.transform.position.z);
+        upBody.transform.position = new Vector3(upBody.transform.position.x, downBody.transform.position.y + 0.46f, upBody.transform.position.z);
     }
 
     //角色复原
     public void restore()
     {
         //上半身
-        if (upBody.transform.position.y - downBody.transform.position.y < 0.6f)  //=>说明曾处于squat状态
-        {
-            var pos = upBody.transform.position;
-            upBody.transform.position = new Vector3(pos.x, pos.y + 0.213f, pos.z);
-        }
+        var pos_u = upBody.transform.position;
+        var pos_d = downBody.transform.position;
+        upBody.transform.position = new Vector3(pos_u.x, pos_d.y + 0.693f, pos_u.z);
 
         //下半身
         if (CharacStatus == Status.idle || CharacStatus == Status.idleAttack)
