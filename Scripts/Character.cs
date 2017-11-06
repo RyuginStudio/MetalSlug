@@ -157,7 +157,7 @@ public class Character : MonoBehaviour
                     //Debug.Log("shotGun");
                     GameObject.Find("SoundControler").GetComponent<AudioSource>().
                     PlayOneShot(GameData.getInstance().Effect_shotGun);
-                    ShotGun.getInstance().bulletTraject();
+                    ShotGun.getInstance().fixBulletDirecAndPos();
                     break;
                 }
         }

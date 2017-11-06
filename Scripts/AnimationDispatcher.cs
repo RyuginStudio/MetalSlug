@@ -39,7 +39,6 @@ public class AnimationDispatcher : MonoBehaviour
                                     else
                                     {
                                         item.FramesIdx = 0;
-                                        item.autoPlay = false;
                                     }
                                 }
 
@@ -63,7 +62,6 @@ public class AnimationDispatcher : MonoBehaviour
                                     else
                                     {
                                         item.FramesIdx = 0;
-                                        item.autoPlay = false;
                                     }
                                 }
 
@@ -82,7 +80,6 @@ public class AnimationDispatcher : MonoBehaviour
                                     else
                                     {
                                         item.FramesIdx = 0;
-                                        item.autoPlay = false;
                                     }
                                 }
 
@@ -94,6 +91,7 @@ public class AnimationDispatcher : MonoBehaviour
 
                     break;
                 }
+
             case Character.Status.move:
                 {
                     switch (Character.getInstance().CharacDirection)

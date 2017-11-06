@@ -32,7 +32,7 @@ public class Gun : MonoBehaviour
     public GameObject bulletPrefab;	 //子弹预制件
 
 
-    public void bulletTraject()  //弹道函数
+    public void fixBulletDirecAndPos()  //修正预制件朝向、位置
     {
 
     }

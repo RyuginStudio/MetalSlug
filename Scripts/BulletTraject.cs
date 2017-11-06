@@ -1,26 +1,31 @@
-﻿using System.Collections;
+﻿/*
+**时间：2017年11月06日14:50:45
+**作者：vszed
+**功能：目前能够实现一般子弹的运动轨迹（后续追加追踪导弹运动轨迹）
+**使用方法：挂载到任意子弹预制件中，子弹速度和运行距离在面板中设定好
+*/
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
+public class BulletTraject : MonoBehaviour
 {
     public float BulletSpeed;
-    public float BulletRotation;
-    public float BulletShootDistance;   
-    public Character.Direction BulletDirection;
+    public float BulletShootDistance;
+    public Character.Direction BulletDirection; //由具体的枪传进来
 
 
     // Use this for initialization
     void Start()
     {
-        BulletDirection = Character.getInstance().CharacDirection;  //子弹朝向只需要修正一次
-        BulletRotation = Character.getInstance().downBody.transform.rotation.y;
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        //子弹位置、朝向修正
+        //子弹位置、轨迹更新
         switch (BulletDirection)
         {
             case Character.Direction.lookLeft:
@@ -47,23 +52,6 @@ public class Bullet : MonoBehaviour
                 {
                     break;
                 }
-
-            case Character.Direction.squat:
-                {
-                    if (BulletRotation != 0) //0：左；非0：右
-                    {
-                        float step = BulletSpeed * Time.deltaTime;
-                        this.transform.localPosition = Vector3.MoveTowards(this.transform.localPosition, new Vector3(this.transform.position.x + BulletShootDistance, this.transform.position.y, 0), step);
-
-                    }
-                    else
-                    {
-                        float step = BulletSpeed * Time.deltaTime;
-                        this.transform.localPosition = Vector3.MoveTowards(this.transform.localPosition, new Vector3(this.transform.position.x - BulletShootDistance, this.transform.position.y, 0), step);
-                    }
-                    break;
-                }
-
         }
     }
 }
