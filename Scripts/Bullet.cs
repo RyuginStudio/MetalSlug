@@ -4,23 +4,22 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-
     public float BulletSpeed;
     public float BulletShootDistance;
+    public Character.Direction BulletDirection;
+
 
     // Use this for initialization
     void Start()
     {
-
+        BulletDirection = Character.getInstance().CharacDirection;  //子弹朝向只需要修正一次
     }
 
     // Update is called once per frame
     void Update()
     {
-
-
         //子弹位置、朝向修正
-        switch (Character.getInstance().CharacDirection)
+        switch (BulletDirection)
         {
             case Character.Direction.lookLeft:
                 {
