@@ -5,7 +5,8 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     public float BulletSpeed;
-    public float BulletShootDistance;
+    public float BulletRotation;
+    public float BulletShootDistance;   
     public Character.Direction BulletDirection;
 
 
@@ -13,6 +14,7 @@ public class Bullet : MonoBehaviour
     void Start()
     {
         BulletDirection = Character.getInstance().CharacDirection;  //子弹朝向只需要修正一次
+        BulletRotation = Character.getInstance().downBody.transform.rotation.y;
     }
 
     // Update is called once per frame
@@ -48,7 +50,7 @@ public class Bullet : MonoBehaviour
 
             case Character.Direction.squat:
                 {
-                    if (Character.getInstance().downBody.transform.rotation.y != 0) //0：左；非0：右
+                    if (BulletRotation != 0) //0：左；非0：右
                     {
                         float step = BulletSpeed * Time.deltaTime;
                         this.transform.localPosition = Vector3.MoveTowards(this.transform.localPosition, new Vector3(this.transform.position.x + BulletShootDistance, this.transform.position.y, 0), step);
